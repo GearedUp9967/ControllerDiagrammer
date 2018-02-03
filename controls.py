@@ -4,7 +4,6 @@ from PIL import ImageDraw
 import webbrowser
 import os
 im = Image.open("logitech.png")
-print(im.format, im.size, im.mode)
 draw = ImageDraw.Draw(im)
 text=""
 class TextBox:
@@ -65,14 +64,31 @@ for r in coordsR:
 for l in coordsL:
     boxes.append(TextBox(l,coordsL[l],fnt,right=False))
 """
+def nameToTextBox(btn,text):
+    rightAligned=True
+    add=0
+    if btn[-1] == '1':
+        add=0
+    elif btn[-1] == '2':
+        add=403
+    else:
+        return None
+    if btn[0:-1] in coordsR:
+        return TextBox(text,(coordsR[btn[0:-1]][0],coordsR[btn[0:-1]][1]+add),fnt,right=True)
+    elif button[0:-1] in coordsL:
+        return TextBox(text,(coordsL[btn[0:-1]][0],coordsL[btn[0:-1]][1]+add),fnt,right=False)
+    else:
+        return None
+    
 
 filename="controls.txt"
 if not os.path.isfile(filename):
     file=open(filename,'w+')
-    for key in coordsR:
-        file.write(key+":\r\n")
-    for key in coordsL:
-        file.write(key+":\r\n")
+    for n in range(1,3):
+        for key in coordsR:
+            file.write(key+str(n)+":\n")
+        for key in coordsL:
+            file.write(key+str(n)+":\n")
     file.close()
         
 while True:
@@ -82,15 +98,12 @@ while True:
         webbrowser.open(filename)
     elif letter=='g':
         file=open(filename)
-        for line in file.readlines():
+        for line in file:
             if line[-1]=='\n':
                 line=line[0:-1]
             button=line.split(":")[0]
             text=' '.join(line.split(":")[1:])
-            if button in coordsR:
-                boxes.append(TextBox(text,coordsR[button],fnt,right=True))
-            elif button in coordsL:
-                boxes.append(TextBox(text,coordsL[button],fnt,right=False))
+            boxes.append(nameToTextBox(button,text))
         break
 
 for b in boxes:
