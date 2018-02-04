@@ -47,7 +47,8 @@ coordsR={
     "right_bumper":(590,365),
     "left_bumper":(850,365),
     "right_trigger":(590,388),
-    "left_trigger":(850,388)
+    "left_trigger":(850,388),
+    "team_name":(1090,15)
     }
 
 coordsL={
