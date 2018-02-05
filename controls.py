@@ -31,8 +31,9 @@ class TextBox:
     def getFont(self):
         return self.font
 
-fnt = ImageFont.truetype("OCRAEXT.ttf", 17)
+fnt = ImageFont.truetype("OCRAEXT.TTF", 17)
 coordsR={
+    "team_name":(1090,15),
     "dpad_up":(190,125),
     "dpad_right":(190,145),
     "dpad_left":(190,165),
@@ -47,8 +48,7 @@ coordsR={
     "right_bumper":(590,365),
     "left_bumper":(850,365),
     "right_trigger":(590,388),
-    "left_trigger":(850,388),
-    "team_name":(1090,15)
+    "left_trigger":(850,388)
     }
 
 coordsL={
@@ -86,9 +86,9 @@ filename="controls.txt"
 if not os.path.isfile(filename):
     file=open(filename,'w+')
     for n in range(1,3):
-        for key in coordsR:
+        for key in sorted(coordsR):
             file.write(key+str(n)+":\n")
-        for key in coordsL:
+        for key in sorted(coordsL):
             file.write(key+str(n)+":\n")
     file.close()
         
